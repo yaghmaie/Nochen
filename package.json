@@ -15,5 +15,8 @@
     "ts-jest": "^29.1.2",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.7.0"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
   }
 }
