@@ -1,0 +1,9 @@
+{
+  "name": "notion-orm",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Pejman Yaghmaie",
+  "description": ""
+}
