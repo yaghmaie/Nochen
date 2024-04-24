@@ -2,6 +2,7 @@ import "../symbol-metadata.shim";
 
 import {
     CheckboxPropertyItemObjectResponse,
+    PropertyItemObjectResponse,
     TitlePropertyItemObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import {
@@ -29,16 +30,21 @@ const checkbox: NotionDatabaseProperty = {
     checkbox: {},
 };
 
-export function Title(): NotionSchemaDecorator<Title> {
+function makeDecorator<
+    T extends PropertyItemObjectResponse,
+    U extends NotionDatabaseProperty
+>(value: U): NotionSchemaDecorator<T> {
     return (_, { metadata, name }) => {
-        schema(metadata)[name] = title;
+        schema(metadata)[name] = value;
     };
 }
 
+export function Title(): NotionSchemaDecorator<Title> {
+    return makeDecorator(title);
+}
+
 export function Checkbox(): NotionSchemaDecorator<Checkbox> {
-    return (_, { metadata, name }) => {
-        schema(metadata)[name] = checkbox;
-    };
+    return makeDecorator(checkbox);
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {
