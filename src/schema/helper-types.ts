@@ -15,3 +15,7 @@ export type NotionSchemaDecorator<
     target: Target | undefined,
     context: ClassFieldDecoratorContext<Target, PropertyObject>
 ) => void;
+
+export type NumberFormat = (NotionDatabaseProperty & {
+    type: "number";
+})["number"]["format"];
