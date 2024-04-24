@@ -2,7 +2,8 @@
   "name": "notion-orm",
   "version": "0.0.1",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:integrations": "jest -c jest-integrations.config.js"
   },
   "author": "Pejman Yaghmaie",
   "description": "",
