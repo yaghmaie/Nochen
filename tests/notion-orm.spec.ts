@@ -3,6 +3,7 @@ import {
     Checkbox,
     CreatedBy,
     getSchema,
+    LastEditedBy,
     Number,
     Title,
 } from "../src/schema/schema";
@@ -26,6 +27,9 @@ describe("Notion ORM", () => {
 
             @CreatedBy()
             createdByBar!: CreatedBy;
+
+            @LastEditedBy()
+            lastEditedByBar!: LastEditedBy;
         }
 
         await connection.createDatabase(Foo);

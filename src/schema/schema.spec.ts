@@ -1,4 +1,11 @@
-import { getSchema, Title, Checkbox, Number, CreatedBy } from "./schema";
+import {
+    getSchema,
+    Title,
+    Checkbox,
+    Number,
+    CreatedBy,
+    LastEditedBy,
+} from "./schema";
 
 describe("Schema", () => {
     it("should define title", () => {
@@ -42,6 +49,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "created_by", created_by: {} },
+        });
+    });
+
+    it("should define last edited by", () => {
+        class Foo {
+            @LastEditedBy()
+            bar!: LastEditedBy;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "last_edited_by", last_edited_by: {} },
         });
     });
 });
