@@ -1,4 +1,4 @@
-import { getSchema, Title } from "./schema";
+import { getSchema, Title, Checkbox } from "./schema";
 
 describe("Schema", () => {
     it("should define title", () => {
@@ -9,6 +9,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "title", title: {} },
+        });
+    });
+
+    it("should define checkbox", () => {
+        class Foo {
+            @Checkbox()
+            bar!: Checkbox;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "checkbox", checkbox: {} },
         });
     });
 });
