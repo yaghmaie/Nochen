@@ -2,7 +2,6 @@ import { NotionConnection } from "../src/lib";
 import {
     Checkbox,
     CreatedBy,
-    getSchema,
     LastEditedBy,
     Number,
     Title,
