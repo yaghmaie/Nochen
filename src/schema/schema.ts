@@ -2,6 +2,7 @@ import "../symbol-metadata.shim";
 
 import {
     CheckboxPropertyItemObjectResponse,
+    CreatedByPropertyItemObjectResponse,
     NumberPropertyItemObjectResponse,
     PropertyItemObjectResponse,
     TitlePropertyItemObjectResponse,
@@ -16,6 +17,7 @@ import {
 export type Title = TitlePropertyItemObjectResponse;
 export type Checkbox = CheckboxPropertyItemObjectResponse;
 export type Number = NumberPropertyItemObjectResponse;
+export type CreatedBy = CreatedByPropertyItemObjectResponse;
 
 const NotionSchemaKey = Symbol("_NotionSchema");
 
@@ -37,6 +39,11 @@ function number(format: NumberFormat): NotionDatabaseProperty {
     return { type: "number", number: { format } };
 }
 
+const createdBy: NotionDatabaseProperty = {
+    type: "created_by",
+    created_by: {},
+};
+
 function makeDecorator<
     T extends PropertyItemObjectResponse,
     U extends NotionDatabaseProperty
@@ -56,6 +63,10 @@ export function Checkbox(): NotionSchemaDecorator<Checkbox> {
 
 export function Number(format: NumberFormat): NotionSchemaDecorator<Number> {
     return makeDecorator(number(format));
+}
+
+export function CreatedBy(): NotionSchemaDecorator<CreatedBy> {
+    return makeDecorator(createdBy);
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {

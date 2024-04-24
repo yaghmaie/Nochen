@@ -1,5 +1,11 @@
 import { NotionConnection } from "../src/lib";
-import { Checkbox, getSchema, Number, Title } from "../src/schema/schema";
+import {
+    Checkbox,
+    CreatedBy,
+    getSchema,
+    Number,
+    Title,
+} from "../src/schema/schema";
 
 describe("Notion ORM", () => {
     it("should create a database", async () => {
@@ -17,6 +23,9 @@ describe("Notion ORM", () => {
 
             @Number("dollar")
             numberBar!: Number;
+
+            @CreatedBy()
+            createdByBar!: CreatedBy;
         }
 
         await connection.createDatabase(Foo);
