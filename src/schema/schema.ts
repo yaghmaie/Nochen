@@ -55,7 +55,7 @@ const checkbox: NotionDatabaseProperty = {
     checkbox: {},
 };
 
-function number(format: NumberFormat): NotionDatabaseProperty {
+function number(format?: NumberFormat): NotionDatabaseProperty {
     return { type: "number", number: { format } };
 }
 
@@ -131,7 +131,7 @@ export function Checkbox(): NotionSchemaDecorator<Checkbox> {
     return makeDecorator(checkbox);
 }
 
-export function Number(format: NumberFormat): NotionSchemaDecorator<Number> {
+export function Number(format?: NumberFormat): NotionSchemaDecorator<Number> {
     return makeDecorator(number(format));
 }
 
