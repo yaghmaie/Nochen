@@ -5,6 +5,7 @@ import {
     CreatedTime,
     Date,
     Email,
+    Files,
     LastEditedBy,
     LastEditedTime,
     Number,
@@ -57,6 +58,9 @@ describe("Notion ORM", () => {
 
             @Url()
             urlBar!: Url;
+
+            @Files()
+            filesBar!: Files;
         }
 
         await connection.createDatabase(Foo);

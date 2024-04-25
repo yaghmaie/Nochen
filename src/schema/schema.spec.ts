@@ -12,6 +12,7 @@ import {
     PhoneNumber,
     RichText,
     Url,
+    Files,
 } from "./schema";
 
 describe("Schema", () => {
@@ -144,6 +145,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "url", url: {} },
+        });
+    });
+
+    it("should define files", () => {
+        class Foo {
+            @Files()
+            bar!: Files;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "files", files: {} },
         });
     });
 });
