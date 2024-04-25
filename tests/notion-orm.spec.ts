@@ -11,6 +11,7 @@ import {
     PhoneNumber,
     RichText,
     Title,
+    Url,
 } from "../src/schema/schema";
 
 describe("Notion ORM", () => {
@@ -53,6 +54,9 @@ describe("Notion ORM", () => {
 
             @RichText()
             richTextBar!: RichText;
+
+            @Url()
+            urlBar!: Url;
         }
 
         await connection.createDatabase(Foo);

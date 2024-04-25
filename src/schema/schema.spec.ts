@@ -11,6 +11,7 @@ import {
     Email,
     PhoneNumber,
     RichText,
+    Url,
 } from "./schema";
 
 describe("Schema", () => {
@@ -132,6 +133,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "rich_text", rich_text: {} },
+        });
+    });
+
+    it("should define url", () => {
+        class Foo {
+            @Url()
+            bar!: Url;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "url", url: {} },
         });
     });
 });
