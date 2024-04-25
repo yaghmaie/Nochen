@@ -8,6 +8,7 @@ import {
     LastEditedBy,
     LastEditedTime,
     Number,
+    PhoneNumber,
     Title,
 } from "../src/schema/schema";
 
@@ -45,6 +46,9 @@ describe("Notion ORM", () => {
 
             @Email()
             emailBar!: Email;
+
+            @PhoneNumber()
+            phoneNumberBar!: PhoneNumber;
         }
 
         await connection.createDatabase(Foo);

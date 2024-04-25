@@ -9,6 +9,7 @@ import {
     LastEditedTime,
     Date,
     Email,
+    PhoneNumber,
 } from "./schema";
 
 describe("Schema", () => {
@@ -108,6 +109,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "email", email: {} },
+        });
+    });
+
+    it("should define phone number", () => {
+        class Foo {
+            @PhoneNumber()
+            bar!: PhoneNumber;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "phone_number", phone_number: {} },
         });
     });
 });

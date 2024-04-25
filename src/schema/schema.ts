@@ -9,6 +9,7 @@ import {
     LastEditedByPropertyItemObjectResponse,
     LastEditedTimePropertyItemObjectResponse,
     NumberPropertyItemObjectResponse,
+    PhoneNumberPropertyItemObjectResponse,
     PropertyItemObjectResponse,
     TitlePropertyItemObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
@@ -28,6 +29,7 @@ export type CreatedTime = CreatedTimePropertyItemObjectResponse;
 export type LastEditedTime = LastEditedTimePropertyItemObjectResponse;
 export type Date = DatePropertyItemObjectResponse;
 export type Email = EmailPropertyItemObjectResponse;
+export type PhoneNumber = PhoneNumberPropertyItemObjectResponse;
 
 const NotionSchemaKey = Symbol("_NotionSchema");
 
@@ -79,6 +81,11 @@ const email: NotionDatabaseProperty = {
     email: {},
 };
 
+const phoneNumber: NotionDatabaseProperty = {
+    type: "phone_number",
+    phone_number: {},
+};
+
 function makeDecorator<
     T extends PropertyItemObjectResponse,
     U extends NotionDatabaseProperty
@@ -122,6 +129,10 @@ export function Date(): NotionSchemaDecorator<Date> {
 
 export function Email(): NotionSchemaDecorator<Email> {
     return makeDecorator(email);
+}
+
+export function PhoneNumber(): NotionSchemaDecorator<PhoneNumber> {
+    return makeDecorator(phoneNumber);
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {
