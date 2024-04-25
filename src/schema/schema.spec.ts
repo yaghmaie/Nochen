@@ -8,6 +8,7 @@ import {
     CreatedTime,
     LastEditedTime,
     Date,
+    Email,
 } from "./schema";
 
 describe("Schema", () => {
@@ -96,6 +97,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "date", date: {} },
+        });
+    });
+
+    it("should define email", () => {
+        class Foo {
+            @Email()
+            bar!: Email;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "email", email: {} },
         });
     });
 });

@@ -5,6 +5,7 @@ import {
     CreatedByPropertyItemObjectResponse,
     CreatedTimePropertyItemObjectResponse,
     DatePropertyItemObjectResponse,
+    EmailPropertyItemObjectResponse,
     LastEditedByPropertyItemObjectResponse,
     LastEditedTimePropertyItemObjectResponse,
     NumberPropertyItemObjectResponse,
@@ -26,6 +27,7 @@ export type LastEditedBy = LastEditedByPropertyItemObjectResponse;
 export type CreatedTime = CreatedTimePropertyItemObjectResponse;
 export type LastEditedTime = LastEditedTimePropertyItemObjectResponse;
 export type Date = DatePropertyItemObjectResponse;
+export type Email = EmailPropertyItemObjectResponse;
 
 const NotionSchemaKey = Symbol("_NotionSchema");
 
@@ -72,6 +74,11 @@ const date: NotionDatabaseProperty = {
     date: {},
 };
 
+const email: NotionDatabaseProperty = {
+    type: "email",
+    email: {},
+};
+
 function makeDecorator<
     T extends PropertyItemObjectResponse,
     U extends NotionDatabaseProperty
@@ -111,6 +118,10 @@ export function LastEditedTime(): NotionSchemaDecorator<LastEditedTime> {
 
 export function Date(): NotionSchemaDecorator<Date> {
     return makeDecorator(date);
+}
+
+export function Email(): NotionSchemaDecorator<Email> {
+    return makeDecorator(email);
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {

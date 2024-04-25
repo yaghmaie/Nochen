@@ -4,6 +4,7 @@ import {
     CreatedBy,
     CreatedTime,
     Date,
+    Email,
     LastEditedBy,
     LastEditedTime,
     Number,
@@ -41,6 +42,9 @@ describe("Notion ORM", () => {
 
             @Date()
             dateBar!: Date;
+
+            @Email()
+            emailBar!: Email;
         }
 
         await connection.createDatabase(Foo);
