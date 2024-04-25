@@ -7,6 +7,7 @@ import {
     DatePropertyItemObjectResponse,
     EmailPropertyItemObjectResponse,
     FilesPropertyItemObjectResponse,
+    FormulaPropertyItemObjectResponse,
     LastEditedByPropertyItemObjectResponse,
     LastEditedTimePropertyItemObjectResponse,
     NumberPropertyItemObjectResponse,
@@ -38,6 +39,7 @@ export type RichText = RichTextPropertyItemObjectResponse;
 export type Url = UrlPropertyItemObjectResponse;
 export type Files = FilesPropertyItemObjectResponse;
 export type People = PeoplePropertyItemObjectResponse;
+export type Formula = FormulaPropertyItemObjectResponse;
 
 const NotionSchemaKey = Symbol("_NotionSchema");
 
@@ -114,6 +116,13 @@ const people: NotionDatabaseProperty = {
     people: {},
 };
 
+function formula(expression: string): NotionDatabaseProperty {
+    return {
+        type: "formula",
+        formula: { expression },
+    };
+}
+
 function makeDecorator<
     T extends PropertyItemObjectResponse,
     U extends NotionDatabaseProperty
@@ -177,6 +186,10 @@ export function Files(): NotionSchemaDecorator<Files> {
 
 export function People(): NotionSchemaDecorator<People> {
     return makeDecorator(people);
+}
+
+export function Formula(expression: string): NotionSchemaDecorator<Formula> {
+    return makeDecorator(formula(expression));
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {

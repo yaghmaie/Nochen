@@ -6,6 +6,7 @@ import {
     Date,
     Email,
     Files,
+    Formula,
     LastEditedBy,
     LastEditedTime,
     Number,
@@ -65,6 +66,9 @@ describe("Notion ORM", () => {
 
             @People()
             peopleBar!: People;
+
+            @Formula("")
+            formulaBar!: Formula;
         }
 
         await connection.createDatabase(Foo);

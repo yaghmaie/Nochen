@@ -14,6 +14,7 @@ import {
     Url,
     Files,
     People,
+    Formula,
 } from "./schema";
 
 describe("Schema", () => {
@@ -168,6 +169,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "people", people: {} },
+        });
+    });
+
+    it("should define formula", () => {
+        class Foo {
+            @Formula("")
+            bar!: Formula;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "formula", formula: { expression: "" } },
         });
     });
 });
