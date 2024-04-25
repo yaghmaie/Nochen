@@ -9,6 +9,7 @@ import {
     Formula,
     LastEditedBy,
     LastEditedTime,
+    MultiSelect,
     Number,
     People,
     PhoneNumber,
@@ -69,6 +70,9 @@ describe("Notion ORM", () => {
 
             @Formula("")
             formulaBar!: Formula;
+
+            @MultiSelect(["one", "blue"], "two")
+            multiSelectBar!: MultiSelect;
         }
 
         await connection.createDatabase(Foo);

@@ -1,6 +1,8 @@
 import {
     CreateDatabaseParameters,
+    CreatePageParameters,
     PropertyItemObjectResponse,
+    SelectPropertyItemObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 export type NotionDatabaseProperties = CreateDatabaseParameters["properties"];
@@ -19,3 +21,11 @@ export type NotionSchemaDecorator<
 export type NumberFormat = (NotionDatabaseProperty & {
     type: "number";
 })["number"]["format"];
+
+type SelectOptions = NonNullable<
+    (NotionDatabaseProperty & {
+        type: "select";
+    })["select"]["options"]
+>;
+
+export type ColorSelect = NonNullable<SelectOptions[0]["color"]>;

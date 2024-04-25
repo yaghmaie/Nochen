@@ -10,6 +10,7 @@ import {
     FormulaPropertyItemObjectResponse,
     LastEditedByPropertyItemObjectResponse,
     LastEditedTimePropertyItemObjectResponse,
+    MultiSelectPropertyItemObjectResponse,
     NumberPropertyItemObjectResponse,
     PeoplePropertyItemObjectResponse,
     PhoneNumberPropertyItemObjectResponse,
@@ -19,6 +20,7 @@ import {
     UrlPropertyItemObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import {
+    ColorSelect,
     NotionDatabaseProperty,
     NotionSchema,
     NotionSchemaDecorator,
@@ -40,6 +42,9 @@ export type Url = UrlPropertyItemObjectResponse;
 export type Files = FilesPropertyItemObjectResponse;
 export type People = PeoplePropertyItemObjectResponse;
 export type Formula = FormulaPropertyItemObjectResponse;
+export type MultiSelect = MultiSelectPropertyItemObjectResponse;
+
+export type SelectOption = string | [string, ColorSelect?];
 
 const NotionSchemaKey = Symbol("_NotionSchema");
 
@@ -123,6 +128,19 @@ function formula(expression: string): NotionDatabaseProperty {
     };
 }
 
+function multiSelect(options: SelectOption[]): NotionDatabaseProperty {
+    return {
+        type: "multi_select",
+        multi_select: {
+            options: options.map((_) =>
+                typeof _ === "string"
+                    ? { name: _ }
+                    : { name: _[0], color: _[1] }
+            ),
+        },
+    };
+}
+
 function makeDecorator<
     T extends PropertyItemObjectResponse,
     U extends NotionDatabaseProperty
@@ -190,6 +208,12 @@ export function People(): NotionSchemaDecorator<People> {
 
 export function Formula(expression: string): NotionSchemaDecorator<Formula> {
     return makeDecorator(formula(expression));
+}
+
+export function MultiSelect(
+    ...options: SelectOption[]
+): NotionSchemaDecorator<MultiSelect> {
+    return makeDecorator(multiSelect(options));
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {

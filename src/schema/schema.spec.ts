@@ -15,6 +15,7 @@ import {
     Files,
     People,
     Formula,
+    MultiSelect,
 } from "./schema";
 
 describe("Schema", () => {
@@ -180,6 +181,28 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "formula", formula: { expression: "" } },
+        });
+    });
+
+    it("should define multi select", () => {
+        class Foo {
+            @MultiSelect(["one", "blue"], "two")
+            bar!: MultiSelect;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: {
+                type: "multi_select",
+                multi_select: {
+                    options: [
+                        {
+                            name: "one",
+                            color: "blue",
+                        },
+                        { name: "two" },
+                    ],
+                },
+            },
         });
     });
 });
