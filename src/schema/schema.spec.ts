@@ -16,6 +16,7 @@ import {
     People,
     Formula,
     MultiSelect,
+    Select,
 } from "./schema";
 
 describe("Schema", () => {
@@ -194,6 +195,28 @@ describe("Schema", () => {
             bar: {
                 type: "multi_select",
                 multi_select: {
+                    options: [
+                        {
+                            name: "one",
+                            color: "blue",
+                        },
+                        { name: "two" },
+                    ],
+                },
+            },
+        });
+    });
+
+    it("should define select", () => {
+        class Foo {
+            @Select(["one", "blue"], "two")
+            bar!: Select;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: {
+                type: "select",
+                select: {
                     options: [
                         {
                             name: "one",

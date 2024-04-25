@@ -14,6 +14,7 @@ import {
     People,
     PhoneNumber,
     RichText,
+    Select,
     Title,
     Url,
 } from "../src/schema/schema";
@@ -73,6 +74,9 @@ describe("Notion ORM", () => {
 
             @MultiSelect(["one", "blue"], "two")
             multiSelectBar!: MultiSelect;
+
+            @Select(["one", "blue"], "two")
+            selectBar!: Select;
         }
 
         await connection.createDatabase(Foo);

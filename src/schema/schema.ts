@@ -16,6 +16,7 @@ import {
     PhoneNumberPropertyItemObjectResponse,
     PropertyItemObjectResponse,
     RichTextPropertyItemObjectResponse,
+    SelectPropertyItemObjectResponse,
     TitlePropertyItemObjectResponse,
     UrlPropertyItemObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
@@ -43,6 +44,7 @@ export type Files = FilesPropertyItemObjectResponse;
 export type People = PeoplePropertyItemObjectResponse;
 export type Formula = FormulaPropertyItemObjectResponse;
 export type MultiSelect = MultiSelectPropertyItemObjectResponse;
+export type Select = SelectPropertyItemObjectResponse;
 
 export type SelectOption = string | [string, ColorSelect?];
 
@@ -132,13 +134,24 @@ function multiSelect(options: SelectOption[]): NotionDatabaseProperty {
     return {
         type: "multi_select",
         multi_select: {
-            options: options.map((_) =>
-                typeof _ === "string"
-                    ? { name: _ }
-                    : { name: _[0], color: _[1] }
-            ),
+            options: options.map(toSelectOptionDatabaseProperty),
         },
     };
+}
+
+function select(options: SelectOption[]): NotionDatabaseProperty {
+    return {
+        type: "select",
+        select: {
+            options: options.map(toSelectOptionDatabaseProperty),
+        },
+    };
+}
+
+function toSelectOptionDatabaseProperty(option: SelectOption) {
+    return typeof option === "string"
+        ? { name: option }
+        : { name: option[0], color: option[1] };
 }
 
 function makeDecorator<
@@ -214,6 +227,12 @@ export function MultiSelect(
     ...options: SelectOption[]
 ): NotionSchemaDecorator<MultiSelect> {
     return makeDecorator(multiSelect(options));
+}
+
+export function Select(
+    ...options: SelectOption[]
+): NotionSchemaDecorator<Select> {
+    return makeDecorator(select(options));
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {
