@@ -3,6 +3,7 @@ import {
     Checkbox,
     CreatedBy,
     CreatedTime,
+    Date,
     LastEditedBy,
     LastEditedTime,
     Number,
@@ -37,6 +38,9 @@ describe("Notion ORM", () => {
 
             @LastEditedTime()
             lastEditedTimeBar!: LastEditedTime;
+
+            @Date()
+            dateBar!: Date;
         }
 
         await connection.createDatabase(Foo);

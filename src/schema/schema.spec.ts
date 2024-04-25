@@ -7,6 +7,7 @@ import {
     LastEditedBy,
     CreatedTime,
     LastEditedTime,
+    Date,
 } from "./schema";
 
 describe("Schema", () => {
@@ -84,6 +85,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "last_edited_time", last_edited_time: {} },
+        });
+    });
+
+    it("should define date", () => {
+        class Foo {
+            @Date()
+            bar!: Date;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "date", date: {} },
         });
     });
 });
