@@ -2,7 +2,9 @@ import { NotionConnection } from "../src/lib";
 import {
     Checkbox,
     CreatedBy,
+    CreatedTime,
     LastEditedBy,
+    LastEditedTime,
     Number,
     Title,
 } from "../src/schema/schema";
@@ -29,6 +31,12 @@ describe("Notion ORM", () => {
 
             @LastEditedBy()
             lastEditedByBar!: LastEditedBy;
+
+            @CreatedTime()
+            createdTimeBar!: CreatedTime;
+
+            @LastEditedTime()
+            lastEditedTimeBar!: LastEditedTime;
         }
 
         await connection.createDatabase(Foo);

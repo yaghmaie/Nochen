@@ -3,7 +3,9 @@ import "../symbol-metadata.shim";
 import {
     CheckboxPropertyItemObjectResponse,
     CreatedByPropertyItemObjectResponse,
+    CreatedTimePropertyItemObjectResponse,
     LastEditedByPropertyItemObjectResponse,
+    LastEditedTimePropertyItemObjectResponse,
     NumberPropertyItemObjectResponse,
     PropertyItemObjectResponse,
     TitlePropertyItemObjectResponse,
@@ -20,6 +22,8 @@ export type Checkbox = CheckboxPropertyItemObjectResponse;
 export type Number = NumberPropertyItemObjectResponse;
 export type CreatedBy = CreatedByPropertyItemObjectResponse;
 export type LastEditedBy = LastEditedByPropertyItemObjectResponse;
+export type CreatedTime = CreatedTimePropertyItemObjectResponse;
+export type LastEditedTime = LastEditedTimePropertyItemObjectResponse;
 
 const NotionSchemaKey = Symbol("_NotionSchema");
 
@@ -51,6 +55,16 @@ const lastEditedBy: NotionDatabaseProperty = {
     last_edited_by: {},
 };
 
+const createdTime: NotionDatabaseProperty = {
+    type: "created_time",
+    created_time: {},
+};
+
+const lastEditedTime: NotionDatabaseProperty = {
+    type: "last_edited_time",
+    last_edited_time: {},
+};
+
 function makeDecorator<
     T extends PropertyItemObjectResponse,
     U extends NotionDatabaseProperty
@@ -78,6 +92,14 @@ export function CreatedBy(): NotionSchemaDecorator<CreatedBy> {
 
 export function LastEditedBy(): NotionSchemaDecorator<LastEditedBy> {
     return makeDecorator(lastEditedBy);
+}
+
+export function CreatedTime(): NotionSchemaDecorator<CreatedTime> {
+    return makeDecorator(createdTime);
+}
+
+export function LastEditedTime(): NotionSchemaDecorator<LastEditedTime> {
+    return makeDecorator(lastEditedTime);
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {

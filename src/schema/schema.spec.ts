@@ -5,6 +5,8 @@ import {
     Number,
     CreatedBy,
     LastEditedBy,
+    CreatedTime,
+    LastEditedTime,
 } from "./schema";
 
 describe("Schema", () => {
@@ -60,6 +62,28 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "last_edited_by", last_edited_by: {} },
+        });
+    });
+
+    it("should define created time", () => {
+        class Foo {
+            @CreatedTime()
+            bar!: CreatedTime;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "created_time", created_time: {} },
+        });
+    });
+
+    it("should define last edited time", () => {
+        class Foo {
+            @LastEditedTime()
+            bar!: LastEditedTime;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "last_edited_time", last_edited_time: {} },
         });
     });
 });
