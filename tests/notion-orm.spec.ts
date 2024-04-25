@@ -9,6 +9,7 @@ import {
     LastEditedBy,
     LastEditedTime,
     Number,
+    People,
     PhoneNumber,
     RichText,
     Title,
@@ -61,6 +62,9 @@ describe("Notion ORM", () => {
 
             @Files()
             filesBar!: Files;
+
+            @People()
+            peopleBar!: People;
         }
 
         await connection.createDatabase(Foo);

@@ -10,6 +10,7 @@ import {
     LastEditedByPropertyItemObjectResponse,
     LastEditedTimePropertyItemObjectResponse,
     NumberPropertyItemObjectResponse,
+    PeoplePropertyItemObjectResponse,
     PhoneNumberPropertyItemObjectResponse,
     PropertyItemObjectResponse,
     RichTextPropertyItemObjectResponse,
@@ -36,6 +37,7 @@ export type PhoneNumber = PhoneNumberPropertyItemObjectResponse;
 export type RichText = RichTextPropertyItemObjectResponse;
 export type Url = UrlPropertyItemObjectResponse;
 export type Files = FilesPropertyItemObjectResponse;
+export type People = PeoplePropertyItemObjectResponse;
 
 const NotionSchemaKey = Symbol("_NotionSchema");
 
@@ -107,6 +109,11 @@ const files: NotionDatabaseProperty = {
     files: {},
 };
 
+const people: NotionDatabaseProperty = {
+    type: "people",
+    people: {},
+};
+
 function makeDecorator<
     T extends PropertyItemObjectResponse,
     U extends NotionDatabaseProperty
@@ -166,6 +173,10 @@ export function Url(): NotionSchemaDecorator<Url> {
 
 export function Files(): NotionSchemaDecorator<Files> {
     return makeDecorator(files);
+}
+
+export function People(): NotionSchemaDecorator<People> {
+    return makeDecorator(people);
 }
 
 export function getSchema(dbSchema: new (...args: any[]) => object) {

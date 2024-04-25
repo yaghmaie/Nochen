@@ -13,6 +13,7 @@ import {
     RichText,
     Url,
     Files,
+    People,
 } from "./schema";
 
 describe("Schema", () => {
@@ -156,6 +157,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "files", files: {} },
+        });
+    });
+
+    it("should define people", () => {
+        class Foo {
+            @People()
+            bar!: People;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "people", people: {} },
         });
     });
 });
