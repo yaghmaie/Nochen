@@ -9,6 +9,7 @@ import {
     LastEditedTime,
     Number,
     PhoneNumber,
+    RichText,
     Title,
 } from "../src/schema/schema";
 
@@ -49,6 +50,9 @@ describe("Notion ORM", () => {
 
             @PhoneNumber()
             phoneNumberBar!: PhoneNumber;
+
+            @RichText()
+            richTextBar!: RichText;
         }
 
         await connection.createDatabase(Foo);

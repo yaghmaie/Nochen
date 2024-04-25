@@ -10,6 +10,7 @@ import {
     Date,
     Email,
     PhoneNumber,
+    RichText,
 } from "./schema";
 
 describe("Schema", () => {
@@ -120,6 +121,17 @@ describe("Schema", () => {
 
         expect(getSchema(Foo)).toEqual({
             bar: { type: "phone_number", phone_number: {} },
+        });
+    });
+
+    it("should define rich text", () => {
+        class Foo {
+            @RichText()
+            bar!: RichText;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: { type: "rich_text", rich_text: {} },
         });
     });
 });
