@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { NotionConnection } from "../src/lib";
 import {
     Checkbox,
@@ -13,6 +14,7 @@ import {
     Number,
     People,
     PhoneNumber,
+    Relation,
     RichText,
     Select,
     Title,
@@ -22,8 +24,8 @@ import {
 describe("Notion ORM", () => {
     it("should create a database", async () => {
         const connection = new NotionConnection(
-            process.env.SECRET as any,
-            process.env.ROOT_PAGE as any
+            process.env.SECRET as never,
+            process.env.ROOT_PAGE as never
         );
 
         class Foo {
@@ -79,7 +81,15 @@ describe("Notion ORM", () => {
             selectBar!: Select;
         }
 
-        await connection.createDatabase(Foo);
+        class Baz {
+            @Title()
+            titleBar!: Title;
+
+            @Relation("single", Foo)
+            relationBar!: Relation;
+        }
+
+        await connection.createDatabase([Foo, Baz]);
 
         expect(0).toBe(1);
     });

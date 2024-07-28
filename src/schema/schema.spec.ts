@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import {
     getSchema,
     Title,
@@ -17,6 +18,8 @@ import {
     Formula,
     MultiSelect,
     Select,
+    Relation,
+    setDbId,
 } from "./schema";
 
 describe("Schema", () => {
@@ -224,6 +227,26 @@ describe("Schema", () => {
                         },
                         { name: "two" },
                     ],
+                },
+            },
+        });
+    });
+
+    it("should define relation", () => {
+        class Tmp {}
+        setDbId(Tmp, "tmp_id");
+        class Foo {
+            @Relation("single", Tmp)
+            bar!: Relation;
+        }
+
+        expect(getSchema(Foo)).toEqual({
+            bar: {
+                type: "relation",
+                relation: {
+                    database_id: "tmp_id",
+                    type: "single_property",
+                    single_property: {},
                 },
             },
         });

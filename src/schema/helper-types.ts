@@ -1,15 +1,29 @@
 import {
     CreateDatabaseParameters,
-    CreatePageParameters,
     PropertyItemObjectResponse,
-    SelectPropertyItemObjectResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
 export type NotionDatabaseProperties = CreateDatabaseParameters["properties"];
 export type NotionDatabaseProperty =
     NotionDatabaseProperties[keyof NotionDatabaseProperties];
+export type NotionDatabasePropertyExcludingRelation = Exclude<
+    NotionDatabaseProperty,
+    { type?: "relation" }
+>;
+export type NotionDatabaseRelationProperty = Extract<
+    NotionDatabaseProperty,
+    { type?: "relation" }
+>;
 
 export type NotionSchema = Record<PropertyKey, NotionDatabaseProperty>;
+export type NotionSchemaExcludingRelation = Record<
+    PropertyKey,
+    NotionDatabasePropertyExcludingRelation
+>;
+export type NotionSchemaRelations = Record<
+    PropertyKey,
+    NotionDatabaseRelationProperty
+>;
 
 export type NotionSchemaDecorator<
     PropertyObject extends PropertyItemObjectResponse
@@ -29,3 +43,5 @@ type SelectOptions = NonNullable<
 >;
 
 export type ColorSelect = NonNullable<SelectOptions[0]["color"]>;
+
+export type Class = new (...args: unknown[]) => object;
