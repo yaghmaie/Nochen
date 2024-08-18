@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "test": "jest",
-    "test:integrations": "jest -c jest-integrations.config.js"
+    "test:integrations": "jest -c jest-integrations.config.js --runInBand"
   },
   "author": "Pejman Yaghmaie",
   "description": "",
