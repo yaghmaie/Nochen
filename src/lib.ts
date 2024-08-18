@@ -30,29 +30,30 @@ export class NotionConnection {
     }
 
     async createDatabase(dbSchemas: Array<Class>) {
-        for (const dbSchema of dbSchemas) {
+        const createDbTasks = dbSchemas.map((dbSchema) => {
             const propertySchema = getSchema(dbSchema);
             const nonRelationPropertySchema = excludeRelations(propertySchema);
 
-            const db = await this._client.databases.create({
+            const createDb = this._client.databases.create({
                 title: [{ type: "text", text: { content: dbSchema.name } }],
                 properties: nonRelationPropertySchema,
                 parent: {
                     page_id: this._rootPageId,
                 },
             });
+            return createDb.then(({ id }) => setDbId(dbSchema, id));
+        });
+        await Promise.all(createDbTasks);
 
-            setDbId(dbSchema, db.id);
-        }
-
-        for (const dbSchema of dbSchemas) {
+        const createRelationTasks = dbSchemas.map((dbSchema) => {
             const propertySchema = getSchema(dbSchema);
             const relationPropertySchema = filterRelations(propertySchema);
 
-            await this._client.databases.update({
+            return this._client.databases.update({
                 database_id: getDbId(dbSchema)!,
                 properties: relationPropertySchema,
             });
-        }
+        });
+        await Promise.all(createRelationTasks);
     }
 }
