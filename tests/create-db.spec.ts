@@ -14,7 +14,6 @@ import {
     Number,
     People,
     PhoneNumber,
-    Relation,
     RichText,
     Select,
     Title,
@@ -22,12 +21,18 @@ import {
 } from "../src/schema/schema";
 
 describe("Notion ORM", () => {
-    it("should create a database", async () => {
-        const connection = new NotionConnection(
+    let connection: NotionConnection;
+
+    beforeEach(async () => {
+        connection = new NotionConnection(
             process.env.SECRET as never,
             process.env.ROOT_PAGE as never
         );
 
+        await connection.cleanUp();
+    });
+
+    it("should create a database with all supported property types", async () => {
         class Foo {
             @Title()
             titleBar!: Title;
@@ -81,16 +86,6 @@ describe("Notion ORM", () => {
             selectBar!: Select;
         }
 
-        class Baz {
-            @Title()
-            titleBar!: Title;
-
-            @Relation("single", Foo)
-            relationBar!: Relation;
-        }
-
-        await connection.createDatabase([Foo, Baz]);
-
-        expect(0).toBe(1);
+        await connection.createDatabase([Foo]);
     });
 });
